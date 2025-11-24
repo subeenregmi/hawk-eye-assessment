@@ -16,6 +16,7 @@ const (
 	Queen
 	King
 	Ace
+	Joker
 )
 
 var Ranks = [13]Rank{

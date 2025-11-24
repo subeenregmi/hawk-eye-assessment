@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	g := game.Game{WinThreshold: 8}
+	g := game.Game{WinThreshold: 8, Jokers: 2}
 	if err := g.Start(); err != nil {
 		panic(err)
 	}

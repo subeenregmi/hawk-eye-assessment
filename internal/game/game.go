@@ -7,15 +7,27 @@ import (
 	"strings"
 
 	"github.com/subeenregmi/hawk-eye-assessment/internal/deck"
+	"github.com/subeenregmi/hawk-eye-assessment/internal/rank"
 )
 
 func (g *Game) Start() error {
 	d := deck.NewDeck()
+
+	// add jokers before starting
+	for i := 0; i < int(g.Jokers); i++ {
+		d.AddJoker()
+	}
+
 	d.Shuffle()
 
 	displayRules()
 
-	currentCard := d.GetRandomCard()
+	currentCard := d.DrawRandomCard()
+
+	// ensure we dont start on the joker card
+	for currentCard.Rank == rank.Joker {
+		currentCard = d.DrawRandomCard()
+	}
 
 	fmt.Printf("The starting card is: %v\n", currentCard)
 
@@ -26,6 +38,11 @@ func (g *Game) Start() error {
 		}
 
 		nextCard := d.DrawRandomCard()
+
+		if nextCard.Rank == rank.Joker {
+			fmt.Printf("JOKER %v! You have been forced to resign\n", nextCard)
+			return nil
+		}
 
 		if nextCard.GreaterThan(currentCard) != userPrediction {
 			fmt.Printf("FAIL! The card was: %v\n", nextCard)

@@ -19,6 +19,8 @@ func (c Card) String() string {
 		symbol = "Q"
 	case rank.King:
 		symbol = "K"
+	case rank.Joker:
+		return "🃏"
 	default:
 		symbol = strconv.Itoa(int(c.Rank))
 	}

@@ -27,12 +27,10 @@ func NewDeck() deck {
 
 func (d *deck) Shuffle() {
 	for i := range d.Cards {
-		d.Cards[i] = d.GetRandomCard()
-	}
-}
+		j := rand.Intn(len(d.Cards))
 
-func (d *deck) GetRandomCard() card.Card {
-	return d.Cards[rand.Intn(len(d.Cards))]
+		d.Cards[i], d.Cards[j] = d.Cards[j], d.Cards[i]
+	}
 }
 
 func (d *deck) DrawRandomCard() card.Card {
@@ -42,4 +40,8 @@ func (d *deck) DrawRandomCard() card.Card {
 	d.Cards = append(d.Cards[:i], d.Cards[i+1:]...)
 
 	return card
+}
+
+func (d *deck) AddJoker() {
+	d.Cards = append(d.Cards, card.Card{Rank: rank.Joker})
 }
