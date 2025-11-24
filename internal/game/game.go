@@ -44,6 +44,11 @@ func (g *Game) Start() error {
 			return nil
 		}
 
+		if nextCard.Equal(currentCard) {
+			fmt.Printf("LUCKY! The card was the same: %v\n", nextCard)
+			continue
+		}
+
 		if nextCard.GreaterThan(currentCard) != userPrediction {
 			fmt.Printf("FAIL! The card was: %v\n", nextCard)
 			return nil
